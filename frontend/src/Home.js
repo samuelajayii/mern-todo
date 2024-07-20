@@ -25,6 +25,13 @@ function Home() {
       .then(result => console.log(result))
       .catch(err => console.log(err))
   }
+
+  const handleUndo = (id) => {
+    axios.put('http://localhost:4000/undodone/'+id)
+      .then(result => console.log(result))
+      .catch(err => console.log(err))
+  }
+
   return (
     <div>
       <CreateTodo />
@@ -33,10 +40,11 @@ function Home() {
           todos.length === 0 ? (<div>No Todo Yet</div>) :
             todos.map((todo) => (
               <div className="todo-task">
-                <input type="checkbox" onClick={() => handleEdit(todo._id)} checked={todo.done ? true : false}>
+                <input type="checkbox" onClick={() => handleEdit(todo._id)} >
                 </input>
                 <p className={todo.done ? 'line-through' : `underline`}>{todo.task}</p>
                 <button type="button" onClick={ () => handleDelete(todo._id)}>Delete</button>
+                <button type="button" onClick={ () => handleUndo(todo._id)}>Undo</button>
               </div>
             ))
         }
